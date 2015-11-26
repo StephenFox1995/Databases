@@ -3,6 +3,8 @@ select * from obstacle;
 select * from player;
 set serveroutput on;
 
+
+-- A procedure to insert an obstacle into the databse.
 CREATE OR REPLACE PROCEDURE insert_obstacle (
 GAME_ADMIN_ID IN  OBSTACLE.GAMEADMINID%TYPE,
 OBSTACLE_ID IN OBSTACLE.OBSTACLEID%TYPE,
@@ -46,6 +48,7 @@ BEGIN
 END;
 
 
+-- Checks to see if an admin exists already within the database.
 CREATE OR REPLACE FUNCTION sf_admin_exist(admin_id gameadmin.gameadminid%TYPE)
 RETURN boolean
 AS
@@ -60,6 +63,8 @@ WHEN no_data_found THEN
   RETURN FALSE;
 END sf_admin_exist;
 
+
+-- Checks to see if a player exists already in the database.
 CREATE OR REPLACE FUNCTION sf_player_exist(player_id player.playerid%TYPE)
 RETURN boolean
 AS
