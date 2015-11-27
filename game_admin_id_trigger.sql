@@ -1,12 +1,13 @@
-set serveroutput on;
-select * from gameadmin;
-select * from challenge;
-CREATE OR REPLACE Trigger correctPrefixGameAdminID
-AFTER INSERT ON gameadmin
+CREATE OR REPLACE TRIGGER gameadmin_bi
+BEFORE INSERT ON gameadmin
 FOR EACH ROW
+DECLARE
+  prefix char(1);
 BEGIN
-  dbms_output.put_line('Triggggger:' || :new.gameadminid || :old.gameadminid);
-END;
+  prefix := substr(:new.gameadminid, 0, 1);
 
-INSERT INTO challenge values('C010', 'Race', '06:06:10');
-INSERT INTO gameadmin values('A010', 'C010');
+  IF prefix != 'A' THEN
+     RAISE_APPLICATION_ERROR 
+      (-20000, ' GAMEADMIN.GAMEADMINID: Admin does not have correct prefix. Must begin with A');
+  END IF;  
+END;
