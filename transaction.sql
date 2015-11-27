@@ -15,7 +15,7 @@ AS
 BEGIN
   IF sf_admin_exist(GAME_ADMIN_ID) THEN
     IF sf_player_exist(PLAYER_ID) THEN
-      INSERT INTO OBSTACLE VALUES(OBSTACLE_ID, AWARD_POINTS, DESCRIPTION, 
+      INSERT INTO OBSTACLE VALUES(OBSTACLE_ID, AWARD_POINTS, DESCRIPTION,
       GAME_ADMIN_ID, PLAYER_ID);
     ELSE
       dbms_output.put_line('Could not insert obstacle, the game player you entered,
@@ -33,19 +33,6 @@ BEGIN
 END;
 
 
--- Checks to make sure the prefix of and entry is correct.
-CREATE OR REPLACE FUNCTION correct_prefix(
-game_admin gameadmin.gameadminid%type,
-prefix char)
-RETURN BOOLEAN
-AS
-BEGIN
-  IF INSTR(game_admin, prefix) > 0 THEN
-    return true;
-  ELSE
-    return false;
-  END IF;
-END;
 
 
 -- Checks to see if an admin exists already within the database.
@@ -54,11 +41,11 @@ RETURN boolean
 AS
   temp_id gameadmin.gameadminid%type;
 BEGIN
-  SELECT gameadmin.gameadminid temp_id INTO temp_id 
-  FROM gameadmin 
+  SELECT gameadmin.gameadminid temp_id INTO temp_id
+  FROM gameadmin
   WHERE gameadmin.gameadminid = admin_id;
   RETURN TRUE;
-exception  
+exception
 WHEN no_data_found THEN
   RETURN FALSE;
 END sf_admin_exist;
@@ -74,9 +61,7 @@ BEGIN
   FROM player WHERE
   player.playerid = player_id;
   RETURN TRUE;
-exception  
+exception
 WHEN no_data_found THEN
   RETURN FALSE;
 END;
-
-
