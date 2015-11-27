@@ -12,18 +12,17 @@ BEGIN
 END;
 
 
---CREATE OR REPLACE TRIGGER gameadmin_ai
---AFTER INSERT ON gameadmin
---FOR EACH ROW 
---BEGIN
---  INSERT INTO CHALLENGE_LOGTABLE values('gameadmin table', 
---  :new.gameadminid, 
---  TO_CHAR(user),
---  'INS',
---  sysdate);
---END;
+CREATE OR REPLACE TRIGGER GAMEADMIN_AI 
+AFTER INSERT ON GAMEADMIN 
+FOR EACH ROW 
+BEGIN
+    INSERT INTO CHALLENGE_LOGTABLE values('gameadmin table', 
+  :new.gameadminid, 
+  TO_CHAR(user),
+  'INS',
+  sysdate);
+END;
 
-DROP TABLE CHALLENGE_LOGTABLE;
 
 CREATE TABLE CHALLENGE_LOGTABLE (
   tablename varchar(20),
@@ -33,11 +32,14 @@ CREATE TABLE CHALLENGE_LOGTABLE (
   sys_date DATE
 );
 
-delete from challenge where challengeid = 'C006';
+select * from challenge;
+select * from gameadmin;
 delete from gameadmin where gameadminid = 'A010';
+delete from challenge where challengeid = 'C006';
 insert into challenge values('C006', 'Football', '09:09:12');
 insert into gameadmin values('A010', 'C006');
 
 drop table challenge_logtable;
 
 select * from challenge_logtable;
+
