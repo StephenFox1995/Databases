@@ -8,16 +8,16 @@ BEGIN
   IF prefix != 'A' THEN
      RAISE_APPLICATION_ERROR 
       (-20000, ' GAMEADMIN.GAMEADMINID: Admin does not have correct prefix. Must begin with A');
-  END IF;  
+  END IF;
 END;
 
 
-CREATE OR REPLACE TRIGGER GAMEADMIN_AI 
-AFTER INSERT ON GAMEADMIN 
-FOR EACH ROW 
+CREATE OR REPLACE TRIGGER GAMEADMIN_AI
+AFTER INSERT ON GAMEADMIN
+FOR EACH ROW
 BEGIN
-    INSERT INTO CHALLENGE_LOGTABLE values('gameadmin table', 
-  :new.gameadminid, 
+    INSERT INTO CHALLENGE_LOGTABLE values('gameadmin table',
+  :new.gameadminid,
   TO_CHAR(user),
   'INS',
   sysdate);
@@ -42,4 +42,3 @@ insert into gameadmin values('A010', 'C006');
 drop table challenge_logtable;
 
 select * from challenge_logtable;
-

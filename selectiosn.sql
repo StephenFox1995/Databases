@@ -17,10 +17,10 @@ WHERE player.playerid = 'P001';
 
 -- Aggregate & sub query
 -- Finds all the info about the player who has the highscore.
-SELECT player.name, player.playerid, player.points, leaderboard.score from player 
+SELECT player.name, player.playerid, player.points, leaderboard.score from player
 JOIN leaderboard ON player.playerid = leaderboard.playerid
-WHERE leaderboard.playerid in 
-  (SELECT leaderboard.playerid FROM leaderboard 
+WHERE leaderboard.playerid in
+  (SELECT leaderboard.playerid FROM leaderboard
    WHERE score in (
     SELECT MAX(score) FROM Leaderboard));
 
@@ -35,11 +35,3 @@ SELECT playerid, obstacle.description FROM obstacle;
 SELECT gameadminid FROM tool
 INTERSECT
 SELECT gameadminid FROM obstacle;
-
-
-
-
-
-
-
-
