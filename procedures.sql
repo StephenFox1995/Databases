@@ -1,9 +1,3 @@
-select * from gameadmin;
-select * from obstacle;
-select * from player;
-set serveroutput on;
-
-
 -- A procedure to insert an obstacle into the databse.
 CREATE OR REPLACE PROCEDURE insert_obstacle (
 GAME_ADMIN_ID IN  OBSTACLE.GAMEADMINID%TYPE,

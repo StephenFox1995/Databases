@@ -1,22 +1,26 @@
-CREATE OR REPLACE TRIGGER gameadmin_bi
-BEFORE INSERT ON gameadmin
+-- Constraint trigger.
+CREATE OR REPLACE TRIGGER obstacle_bi
+BEFORE INSERT ON obstacle
 FOR EACH ROW
 DECLARE
   prefix char(1);
 BEGIN
-  prefix := substr(:new.gameadminid, 0, 1);
-  IF prefix != 'A' THEN
-     RAISE_APPLICATION_ERROR 
-      (-20000, ' GAMEADMIN.GAMEADMINID: Admin does not have correct prefix. Must begin with A');
+  prefix := substr(:new.obstacleid, 0, 1);
+  IF prefix != 'O' THEN
+     RAISE_APPLICATION_ERROR
+      (-20000, ' OBSTALCE.OBSTALCEID: OBSTACLE does not have correct prefix. Must begin with O');
   END IF;
 END;
 
 
-CREATE OR REPLACE TRIGGER GAMEADMIN_AI
-AFTER INSERT ON GAMEADMIN
+
+-- Audit trigger.
+CREATE OR REPLACE TRIGGER OBSTACLE_AI
+AFTER INSERT ON obstacle
 FOR EACH ROW
 BEGIN
-    INSERT INTO CHALLENGE_LOGTABLE values('gameadmin table',
+    INSERT INTO OBSTACLE_LOGTABLE values('obstacle table',
+  :new.obstalceid,
   :new.gameadminid,
   TO_CHAR(user),
   'INS',
@@ -24,21 +28,11 @@ BEGIN
 END;
 
 
-CREATE TABLE CHALLENGE_LOGTABLE (
+CREATE TABLE OBSTACLE_LOGTABLE (
   tablename varchar(20),
-  gameadminid varchar2(4),
+  obstacleid varchar2(4),
+  gameadminid varchar(4),
   userLogin varchar(255),
   auditor char(3) CHECK (auditor IN ('INS','UPD','DEL')),
   sys_date DATE
-);
-
-select * from challenge;
-select * from gameadmin;
-delete from gameadmin where gameadminid = 'A010';
-delete from challenge where challengeid = 'C006';
-insert into challenge values('C006', 'Football', '09:09:12');
-insert into gameadmin values('A010', 'C006');
-
-drop table challenge_logtable;
-
-select * from challenge_logtable;
+)

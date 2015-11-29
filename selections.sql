@@ -1,7 +1,3 @@
--- union
--- join
--- sub query
-
 -- Selection
 -- Select a player and all tools they used using and inner join.
 SELECT player.playerid, tool.toolname FROM player
@@ -26,10 +22,11 @@ WHERE leaderboard.playerid in
 
 
 -- Union
--- Select players who got tools and defeated obs
+-- Select all players who got tools and all who defeated obstacles
 SELECT playerid, toolname FROM Tool
 UNION
 SELECT playerid, obstacle.description FROM obstacle;
+
 
 -- Intersect
 SELECT gameadminid FROM tool
